@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Strife</title>
+    <link rel="stylesheet" href="join.css">
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="../Firebase/firebase.js" defer></script>
+    <script src="join.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Sign in to Strife</h1>
+        <p>Log in to your Strife account to access your chats.</p>
+        <button id="login">Sign In</button>
+        <button id="create-account">Create account</button>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>Sign In</h2>
+            <p>Please confirm your email and enter your password.</p>
+            <input type="email" id="login-email" placeholder="Email" required />
+            <input type="password" id="login-password" placeholder="Password" required />
+            <button id="login-submit">Sign In</button>
+            <button class="close" id="close-login">Back</button>
+        </div>
+    </div>
+
+    <!-- Create Account Modal -->
+    <div id="create-account-modal" class="modal hidden">
+        <div class="modal-content">
+            
+            <h2>Create Account</h2>
+            <p>Please enter your name, email and date of birth.</p>
+            <div id="step-1">
+                <input type="text" id="name" placeholder="Name" required />
+                <input type="email" id="email" placeholder="Email" required />
+                <input type="date" id="dob" required />
+                <button class="create-next" id="next-to-verify">Next</button>
+            </div>
+            <div id="step-2" class="hidden">
+                <input type="text" id="verification-code" placeholder="Enter the verification code" required />
+                <button class="create-next" id="next-to-password">Next</button>
+            </div>
+            <div id="step-3" class="hidden">
+                <input type="password" id="password" placeholder="Password" required />
+                <button class="create-next" id="create-account-submit">Create Account</button>
+            </div>
+            <span class="close" id="close-create-account">Back</span>
+        </div>
+    </div>
+</body>
+</html>
