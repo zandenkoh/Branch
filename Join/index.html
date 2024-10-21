@@ -35,22 +35,29 @@
         <div class="modal-content">
             
             <h2>Create Account</h2>
-            <p>Please enter your name, email and date of birth.</p>
+            
             <div id="step-1">
-                <input type="text" id="name" placeholder="Name" required />
-                <input type="email" id="email" placeholder="Email" required />
-                <input type="date" id="dob" required />
+                <p>Please enter your name, email and date of birth.</p>
+                <label for="name">Name</label>
+                <input type="text" id="name" placeholder="Name" autocomplete="off" required />
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Email" autocomplete="off" required />
+                <label for="name">Date of birth</label>
+                <input class="date-birth" type="date" id="dob" required />
                 <button class="create-next" id="next-to-verify">Next</button>
+                <span class="close" id="close-create-account">Back</span>
             </div>
             <div id="step-2" class="hidden">
-                <input type="text" id="verification-code" placeholder="Enter the verification code" required />
+                <p>An email has been sent to your email address. Please verify your email address before proceeding.</p>
                 <button class="create-next" id="next-to-password">Next</button>
+                <span class="close" id="close-create-account">Back</span>
             </div>
             <div id="step-3" class="hidden">
+                <p>Secure your account with a unique password.</p>
                 <input type="password" id="password" placeholder="Password" required />
                 <button class="create-next" id="create-account-submit">Create Account</button>
             </div>
-            <span class="close" id="close-create-account">Back</span>
+            
         </div>
     </div>
 </body>
