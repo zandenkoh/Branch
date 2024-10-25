@@ -40,7 +40,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Create Account Steps
-    // Use local storage to temporarily hold the user data
     document.getElementById('next-to-verify').addEventListener('click', function () {
         const name = document.getElementById('name').value;
         const email = document.getElementById('email').value;
@@ -72,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     });
 
-    // Next button for password setup
+    // Next button to username setup after email verification
     document.getElementById('next-to-password').addEventListener('click', function () {
         const email = localStorage.getItem('email');
 
@@ -82,9 +81,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 const user = userCredential.user;
 
                 if (user.emailVerified) {
-                    // Show password setup step
+                    // Show username setup step
                     document.getElementById('step-2').classList.add('hidden');
-                    document.getElementById('step-3').classList.remove('hidden');
+                    document.getElementById('step-username').classList.remove('hidden');
                 } else {
                     alert("Please verify your email before proceeding.");
                 }
@@ -94,24 +93,61 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     });
 
-    // Create Account Button
+    // Check Username Uniqueness and Show Password Step
+    document.getElementById('next-to-password-check-username').addEventListener('click', function () {
+        const username = document.getElementById('username').value;
+
+        // Check if username is unique
+        db.collection("users").doc(username).get()
+            .then(docSnapshot => {
+                if (docSnapshot.exists) {
+                    alert("Username already taken. Please choose another.");
+                } else {
+                    // Save username to local storage and proceed
+                    localStorage.setItem('username', username);
+                    document.getElementById('step-username').classList.add('hidden');
+                    document.getElementById('step-3').classList.remove('hidden');
+                }
+            })
+            .catch(error => {
+                console.error("Error checking username:", error);
+                alert("Error checking username. Please try again.");
+            });
+    });
+
+    // Create Account Button (Final Step)
     document.getElementById('create-account-submit').addEventListener('click', function () {
         const password = document.getElementById('password').value;
         const email = localStorage.getItem('email');
+        const name = localStorage.getItem('name');
+        const dob = localStorage.getItem('dob');
+        const username = localStorage.getItem('username');
 
         // Update the password for the created account
         auth.signInWithEmailAndPassword(email, "tempPassword") // Use the temp password to log in
             .then((userCredential) => {
                 const user = userCredential.user;
-                return user.updatePassword(password); // Update to the real password
-            })
-            .then(() => {
-                console.log("Account created successfully");
-                // Clear local storage
-                localStorage.removeItem('name');
-                localStorage.removeItem('email');
-                localStorage.removeItem('dob');
-                window.location.href = "index.html"; // Redirect to index.html
+                return user.updatePassword(password) // Update to the real password
+                    .then(() => {
+                        // Save user data to Firestore under the username as the document ID
+                        return db.collection("users").doc(username).set({
+                            uid: user.uid,  // Store the user's UID
+                            name: name,
+                            email: email,
+                            dob: dob,
+                            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                        });
+                    })
+                    .then(() => {
+                        console.log("Account created and saved to Firestore successfully");
+                        // Sign the user in again with the real password
+                        return auth.signInWithEmailAndPassword(email, password);
+                    })
+                    .then(() => {
+                        // Clear local storage and redirect to setup page
+                        localStorage.clear();
+                        window.location.href = "https://zandenkoh.github.io/Branch/Setup/"; // Redirect to setup.html
+                    });
             })
             .catch(error => {
                 console.error("Error creating account:", error);
