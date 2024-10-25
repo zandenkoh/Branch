@@ -3,18 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join Strife</title>
+    <title>Join Branch</title>
     <link rel="stylesheet" href="join.css">
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-    <script src="../Firebase/firebase.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="firebase.js" defer></script>
     <script src="join.js" defer></script>
 </head>
 <body>
     <div class="container">
-        <h1>Sign in to Strife</h1>
-        <p>Log in to your Strife account to access your chats.</p>
+        <h1>Sign in to Branch</h1>
+        <p>Log in to your Branch account and grow your network.</p>
         <button id="login">Sign In</button>
+        <div class="horizontal-line-container">
+            <hr class="line">
+            <span class="text">or</span>
+            <hr class="line">
+        </div>
         <button id="create-account">Create account</button>
     </div>
 
@@ -52,6 +58,12 @@
                 <button class="create-next" id="next-to-password">Next</button>
                 <span class="close" id="close-create-account">Back</span>
             </div>
+            <div id="step-username" class="hidden">
+                <p>Choose a unqie username for your account.</p>
+                <input type="text" id="username" placeholder="Username" required />
+                <button class="create-next" id="next-to-password-check-username">Next</button>
+            </div>
+
             <div id="step-3" class="hidden">
                 <p>Secure your account with a unique password.</p>
                 <input type="password" id="password" placeholder="Password" required />
@@ -62,3 +74,4 @@
     </div>
 </body>
 </html>
+
