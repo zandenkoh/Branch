@@ -1,5 +1,5 @@
 body {
-    font-family: 'Roboto', sans-serif; 
+    font-family: 'Roboto', sans-serif;
     background-color: #fff;
     display: flex;
     flex-direction: column;
@@ -67,11 +67,33 @@ button:hover {
     margin-top: 15px;
 }
 
+.horizontal-line-container {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    width: 100%;
+}
+
+.line {
+    flex-grow: 1;
+    border: 0;
+    border-top: 1px solid #dbdbdb;
+    width: auto;
+    margin: 0;
+}
+
+.text {
+    margin: 0 10px;
+    color: #656565;
+    font-size: 14px;
+    user-select: none;
+}
+
 #create-account {
     background-color: transparent; /* Green */
     border: 2px solid #e1e1e1;
     color: #000;
-    padding: 12px 40px;
+    padding: 14px 40px;
     width: 100%;
     text-align: center;
     text-decoration: none;
@@ -114,8 +136,8 @@ button:hover {
 
 .modal-content p {
   margin-top: -5px;
-  margin-bottom: 10px;
-  width: 80%;
+  margin-bottom: 20px;
+  width: 100%;
   margin-left: 50%;
   transform: translateX(-50%);
   color: #444;
